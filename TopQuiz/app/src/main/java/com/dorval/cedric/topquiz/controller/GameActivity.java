@@ -15,23 +15,34 @@ public class GameActivity extends AppCompatActivity {
 
 
     private TextView  mQuestionText;
-    private Button  mAnswer1Button;
-    private Button  mAnswer2Button;
-    private Button  mAnswer3Button;
-    private Button  mAnswer4Button;
+    private Button  mAnswerButton1;
+    private Button  mAnswerButton2;
+    private Button  mAnswerButton3;
+    private Button  mAnswerButton4;
+
+    private QuestionBank mQuestionBank;
+    private Question mCurrentQuestion;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        mQuestionText = findViewById(R.id.activity_game_question_txt);
-        mAnswer1Button = findViewById(R.id.activity_game_answer1_btn);
-        mAnswer1Button = findViewById(R.id.activity_game_answer2_btn);
-        mAnswer1Button = findViewById(R.id.activity_game_answer3_btn);
-        mAnswer1Button = findViewById(R.id.activity_game_answer4_btn);
-
         mQuestionBank = this.generateQuestions();
+
+        // Wire widgets
+        mQuestionText = findViewById(R.id.activity_game_question_txt);
+        mAnswerButton1 = findViewById(R.id.activity_game_answer1_btn);
+        mAnswerButton2 = findViewById(R.id.activity_game_answer2_btn);
+        mAnswerButton3 = findViewById(R.id.activity_game_answer3_btn);
+        mAnswerButton3 = findViewById(R.id.activity_game_answer4_btn);
+
+        //Use the tag property to 'name' the buttons
+        mAnswerButton1.setTag(0);
+        mAnswerButton1.setTag(1);
+        mAnswerButton1.setTag(2);
+        mAnswerButton1.setTag(3);
     }
 
     private QuestionBank generateQuestions(){

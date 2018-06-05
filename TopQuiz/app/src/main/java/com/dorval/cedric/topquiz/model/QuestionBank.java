@@ -20,7 +20,7 @@ public class QuestionBank {
 
     }
 
-    public Question getqQuestion(){
+    public Question getQuestion(){
         //Ensure we loop over the questions
         if (mNextQuestionIndex == mQuestionList.size()){
             mNextQuestionIndex = 0;
