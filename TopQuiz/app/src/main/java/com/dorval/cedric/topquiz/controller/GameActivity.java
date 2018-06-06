@@ -2,8 +2,10 @@ package com.dorval.cedric.topquiz.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dorval.cedric.topquiz.R;
 import com.dorval.cedric.topquiz.model.Question;
@@ -11,10 +13,10 @@ import com.dorval.cedric.topquiz.model.QuestionBank;
 
 import java.util.Arrays;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    private TextView  mQuestionText;
+    private TextView  mQuestionTextView;
     private Button  mAnswerButton1;
     private Button  mAnswerButton2;
     private Button  mAnswerButton3;
@@ -32,17 +34,48 @@ public class GameActivity extends AppCompatActivity {
         mQuestionBank = this.generateQuestions();
 
         // Wire widgets
-        mQuestionText = findViewById(R.id.activity_game_question_txt);
+        mQuestionTextView = findViewById(R.id.activity_game_question_txt);
         mAnswerButton1 = findViewById(R.id.activity_game_answer1_btn);
         mAnswerButton2 = findViewById(R.id.activity_game_answer2_btn);
         mAnswerButton3 = findViewById(R.id.activity_game_answer3_btn);
-        mAnswerButton3 = findViewById(R.id.activity_game_answer4_btn);
+        mAnswerButton4 = findViewById(R.id.activity_game_answer4_btn);
 
         //Use the tag property to 'name' the buttons
         mAnswerButton1.setTag(0);
-        mAnswerButton1.setTag(1);
-        mAnswerButton1.setTag(2);
-        mAnswerButton1.setTag(3);
+        mAnswerButton2.setTag(1);
+        mAnswerButton3.setTag(2);
+        mAnswerButton4.setTag(3);
+
+        mAnswerButton1.setOnClickListener(this);
+        mAnswerButton2.setOnClickListener(this);
+        mAnswerButton3.setOnClickListener(this);
+        mAnswerButton4.setOnClickListener(this);
+
+        mCurrentQuestion = mQuestionBank.getQuestion();
+        this.displayQuestions(mCurrentQuestion);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int responseIndex = (int) v.getTag();
+
+        if (responseIndex == mCurrentQuestion.getAnswerIndex()){
+            // Good
+            Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
+        } else{
+            // Wrong answer
+            Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show();
+        }
+        mCurrentQuestion = mQuestionBank.getQuestion();
+    }
+
+    private void displayQuestions(final Question question) {
+        mQuestionTextView.setText(question.getQuestion());
+        mAnswerButton1.setText(question.getChoiceList().get(0));
+        mAnswerButton2.setText(question.getChoiceList().get(1));
+        mAnswerButton3.setText(question.getChoiceList().get(2));
+        mAnswerButton4.setText(question.getChoiceList().get(3));
     }
 
     private QuestionBank generateQuestions(){
